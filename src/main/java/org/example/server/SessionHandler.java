@@ -33,8 +33,6 @@ public class SessionHandler {
     private final Socket socket;
     private String clientName;
 
-    private Instant startCommunicationTime;
-
     SessionHandler(Session session, Socket socket) {
         this.session = session;
         this.socket = socket;
@@ -69,7 +67,6 @@ public class SessionHandler {
             // Listen to the client until the client sends 'good by' message or stops
             // communication
             String line = in.readLine();
-            startCommunicationTime = Instant.now();
 
             if (line.startsWith(CLIENT_PREFIX_OF_GREETING)) {
                 clientName = line.substring(CLIENT_PREFIX_OF_GREETING.length());
@@ -115,11 +112,10 @@ public class SessionHandler {
         String goodByMessage = null;
         if (reason.equals(QuitReason.GOOD_BYE_FROM_CLIENT) || reason.equals(QuitReason.TIMEOUT)) {
 
-            Instant finish = Instant.now();
-            long timeElapsed = Duration.between(startCommunicationTime, finish).toMillis();
+            long timeElapsed = Duration.between(this.session.getSessionCreated(), Instant.now()).toMillis();
 
             goodByMessage = String.format(GOOD_BY_MESSAGE, clientName, timeElapsed);
-            logger.debug("Quit session with: " + goodByMessage);
+            logger.debug("Quit session with message: " + goodByMessage);
             out.println(goodByMessage);
             out.flush();
         }

@@ -49,7 +49,8 @@ public class SocketServerApp {
                 Socket socket = serverSocket.accept();
                 Session session = new Session(socket);
                 sessions.add(session);
-
+                logger.debug("Sessions count: " + sessions.size());
+                
                 if (this.activeSession == null) {
 
                     this.activeSession = sessions.get(0);
@@ -61,8 +62,6 @@ public class SocketServerApp {
                     sessions.remove(0);
                     this.activeSession = null;
                 }
-
-                logger.debug("Sessions count: " + sessions.size());
             }
         } catch (IOException e) {
             logger.error("Server exception: " + e.getMessage());
