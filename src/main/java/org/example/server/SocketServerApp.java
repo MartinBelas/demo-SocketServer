@@ -7,6 +7,9 @@ import java.util.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.server.api.Session;
+import org.example.server.api.SessionHandler;
+import org.example.server.api.SessionResult;
 
 public class SocketServerApp {
 
@@ -59,6 +62,7 @@ public class SocketServerApp {
                     logger.info(String.format("Session RESULT - isOk: %s, reason: %s, msg: %s", sessionResult.isOk(),
                             sessionResult.getQuitReason().toString(), sessionResult.getMessage()));
 
+                    this.activeSession.getSocket().close();
                     sessions.remove(0);
                     this.activeSession = null;
                 }

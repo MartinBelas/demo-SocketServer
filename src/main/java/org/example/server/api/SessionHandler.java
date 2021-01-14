@@ -1,4 +1,4 @@
-package org.example.server;
+package org.example.server.api;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +11,9 @@ import java.util.concurrent.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.server.messageHandler.ProcessMessageResult;
+import org.example.server.messageHandler.strategy.GreetingStrategy;
+import org.example.server.messageHandler.strategy.ProcessStrategyFactory;
 
 /**
  * This thread is responsible for communication with client.
@@ -22,13 +25,12 @@ public class SessionHandler {
 
     // server messages
     private final static String FIRST_MESSAGE = "HI, I AM %s";
-    private final static String I_DONT_UNDERSTAND_MESSAGE = "SORRY, I DID NOT UNDERSTAND THAT";
 
     private final Session session;
     private final Socket socket;
     private String clientName;
 
-    SessionHandler(Session session, Socket socket) {
+    public SessionHandler(Session session, Socket socket) {
         this.session = session;
         this.socket = socket;
     }
@@ -63,11 +65,9 @@ public class SessionHandler {
             // communication
             String line = in.readLine();
 
+            // Suppose that greeting is the first received message after server has sent the FIRST_MESSAGE
             if (line.startsWith(AcceptableClientMessage.GREETING.getMessage())) {
-                clientName = line.substring(AcceptableClientMessage.GREETING.getMessage().length()).trim();
-                logger.debug("client name: " + clientName);
-                out.println(String.format(AcceptableClientMessage.GREETING.getResponse(), clientName));
-                out.flush();
+                clientName = new GreetingStrategy(line).process(out).getMessage();
             }
 
             ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -79,52 +79,54 @@ public class SessionHandler {
                 try {
                     line = messageFuture.get(COMMUNICATION_TIMEOUT, TimeUnit.SECONDS);
                     logger.info(" ---> Received LINE: " + line);
+                    //this.session.refreshReceivedMessageTime(); //TODO do I need?
                 } catch (TimeoutException e) {
-                    return quitSession(in, out, QuitReason.TIMEOUT);
+                    return quitSession(in, out, QuitReason.TIMEOUT, "");
                 }
 
-                if (line.equals(AcceptableClientMessage.GOOD_BY.getMessage())) {
-                    return quitSession(in, out, QuitReason.GOOD_BYE_FROM_CLIENT);
-                }
+                // process command according to its type
+                ProcessMessageResult result = ProcessStrategyFactory.getStrategy(line).process(out);
 
-                if (!AcceptableClientMessage.containsMessage(line)) {
-                    out.println(I_DONT_UNDERSTAND_MESSAGE);
-                    out.flush();
+                if (result.getQuitReason() != null) {
+                    return quitSession(in, out, result.getQuitReason(), result.getMessage());
                 }
-
-                // TODO continue with other commands/messages
             }
 
-            return quitSession(in, out, QuitReason.ALL_FINISHED_OK);
+            return quitSession(in, out, QuitReason.ALL_FINISHED_OK, "");
 
-        } catch (Exception e) {
-            return new SessionResult(false, this.session.getId(), QuitReason.EXCEPTION, e.getMessage());
+        } catch (Exception e) { //TODO
+            e.printStackTrace();
+            return new SessionResult(false, this.session.getId(), QuitReason.ERROR, e.getMessage());
         }
     }
 
-    private SessionResult quitSession(BufferedReader in, PrintWriter out, QuitReason reason) {
+    private SessionResult quitSession(BufferedReader in, PrintWriter out, QuitReason reason, String message) {
 
         String goodByMessage = null;
+        Boolean result;
+
         if (reason.equals(QuitReason.GOOD_BYE_FROM_CLIENT) || reason.equals(QuitReason.TIMEOUT)) {
 
             long timeElapsed = Duration.between(this.session.getSessionCreated(), Instant.now()).toMillis();
-
-            goodByMessage = String.format(AcceptableClientMessage.GOOD_BY.getResponse(), clientName, timeElapsed);
+            goodByMessage = String.format(AcceptableClientMessage.GOOD_BY.getSuccessResponse(), clientName, timeElapsed);
             logger.debug("Quit session with message: " + goodByMessage);
             out.println(goodByMessage);
             out.flush();
+            result = true;
+        } else {
+            logger.error(String.format("Quit session, reason: %s, message: %s ", reason, message));
+            result = false;
         }
 
+        out.close();
         try {
             in.close();
-            this.session.getSocket().close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        out.close();
 
         logger.info(String.format("Session %s closed", this.session.getId()));
         logger.info(" ------------------------------------------ ");
-        return new SessionResult(true, this.session.getId(), reason, goodByMessage);
+        return new SessionResult(result, this.session.getId(), reason, goodByMessage);
     }
 }

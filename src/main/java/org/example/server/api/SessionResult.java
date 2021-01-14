@@ -1,4 +1,4 @@
-package org.example.server;
+package org.example.server.api;
 
 import java.util.UUID;
 

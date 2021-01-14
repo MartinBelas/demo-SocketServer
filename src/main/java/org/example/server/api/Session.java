@@ -1,4 +1,4 @@
-package org.example.server;
+package org.example.server.api;
 
 import java.net.Socket;
 import java.time.Instant;
@@ -10,6 +10,7 @@ public class Session {
     private final Socket socket;
 
     private final Instant sessionCreated;
+    private Instant lastMessageReceived;
 
     public Session(Socket socket) {
         this.id = UUID.randomUUID();
@@ -28,5 +29,4 @@ public class Session {
     public Instant getSessionCreated() {
         return sessionCreated;
     }
-
 }

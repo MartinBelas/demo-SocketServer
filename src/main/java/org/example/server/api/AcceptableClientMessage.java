@@ -1,26 +1,36 @@
-package org.example.server;
+package org.example.server.api;
 
 import java.util.Arrays;
 
 public enum AcceptableClientMessage {
-    GREETING("HI, I AM", "HI %s"),
-    GOOD_BY("BYE MATE!", "BYE %s, WE SPOKE FOR %d MS");
+    GREETING("HI, I AM", "HI %s", null),
+    GOOD_BY("BYE MATE!", "BYE %s, WE SPOKE FOR %d MS", null),
+    ADD_NODE("ADD NODE", "NODE ADDED", "ERROR: NODE ALREADY EXISTS"),
+    REMOVE_NODE("REMOVE NODE", "NODE REMOVED", "ERROR: NODE NOT FOUND"),
+    ADD_EDGE("ADD EDGE", "EDGE ADDED", "ERROR: NODE NOT FOUND"),
+    REMOVE_EDGE("REMOVE EDGE", "EDGE REMOVED", "ERROR: NODE NOT FOUND");
 
     private final String message;
-    private final String response;
+    private final String successResponse;
+    private final String failureResponse;
 
-    AcceptableClientMessage(String message, String response) {
+    AcceptableClientMessage(String message, String successResponse, String failureResponse) {
         this.message = message;
-        this.response = response;
+        this.successResponse = successResponse;
+        this.failureResponse = failureResponse;
     }
 
     public String getMessage() {
         return this.message;
     }
 
-    public String getResponse() {
-        return this.response;
-    };
+    public String getSuccessResponse() {
+        return this.successResponse;
+    }
+
+    public String getFailureResponse() {
+        return this.failureResponse;
+    }
 
     /**
      * Compares message received from client with the set of acceptable messages.
