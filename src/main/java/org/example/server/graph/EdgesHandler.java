@@ -3,7 +3,6 @@ package org.example.server.graph;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.server.messageHandler.strategy.GraphOperationResult;
-import org.example.server.messageHandler.strategy.RemoveEdgeStrategy;
 
 import java.util.*;
 
@@ -11,7 +10,7 @@ public class EdgesHandler {
 
     private static final Logger logger = LogManager.getLogger(EdgesHandler.class);
 
-    private static Collection<Edge> edges = new LinkedList<>(); //TODO which implementation class is best?
+    private static final Collection<Edge> edges = new LinkedList<>();
 
     public static GraphOperationResult add(Edge edge) {
         edges.add(edge);
@@ -51,10 +50,5 @@ public class EdgesHandler {
         });
 
         return deepCopy;
-    }
-
-    //TODO remove
-    public static int getCount() {
-        return edges.size();
     }
 }

@@ -8,7 +8,7 @@ public class ProcessStrategyFactory {
 
     private static final Logger logger = LogManager.getLogger(ProcessStrategyFactory.class);
 
-    private enum ProcessStrategyType {
+    protected enum ProcessStrategyType {
         I_DONT_UNDERSTAND,
         GREETING,
         GOOD_BY,
@@ -16,6 +16,7 @@ public class ProcessStrategyFactory {
         REMOVE_NODE,
         ADD_EDGE,
         REMOVE_EDGE,
+        FIND_SHORTEST_PATH,
         NONE;
     }
 
@@ -48,6 +49,9 @@ public class ProcessStrategyFactory {
 
             case REMOVE_EDGE:
                 return new RemoveEdgeStrategy(clientMessage);
+
+            case FIND_SHORTEST_PATH:
+                return new FindShortestPathStrategy(clientMessage);
 
             default:
                 return new NoneStrategy(clientMessage);
@@ -97,6 +101,12 @@ public class ProcessStrategyFactory {
         if (clientMessage.substring(0, AcceptableClientMessage.REMOVE_EDGE.getMessage().length())
                 .equals(AcceptableClientMessage.REMOVE_EDGE.getMessage())) {
             return ProcessStrategyType.REMOVE_EDGE;
+        }
+
+        // FIND_SHORTEST_PATH
+        if (clientMessage.substring(0, AcceptableClientMessage.FIND_SHORTEST_PATH.getMessage().length())
+                .equals(AcceptableClientMessage.FIND_SHORTEST_PATH.getMessage())) {
+            return ProcessStrategyType.FIND_SHORTEST_PATH;
         }
 
         return ProcessStrategyType.NONE;

@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class NodesHandler {
 
-    private static Map<String, Node> nodes = new HashMap<>();
+    private static final Map<String, Node> nodes = new HashMap<>();
 
     public static GraphOperationResult add(Node node) {
 
@@ -23,7 +23,7 @@ public class NodesHandler {
         if (!nodes.containsKey(node.getName())) {
             return new GraphOperationResult(false);
         }
-        nodes.remove(node.getName()); //TODO unit test
+        nodes.remove(node.getName());
         return new GraphOperationResult(true);
     }
 
@@ -36,7 +36,7 @@ public class NodesHandler {
         Map<String, Node> deepCopy = new HashMap<>();
 
         nodes.forEach( (nodeName, node) -> {
-            deepCopy.put(nodeName, new Node(nodeName)); //TODO some node builder?
+            deepCopy.put(nodeName, new Node(nodeName));
         });
 
         return deepCopy;

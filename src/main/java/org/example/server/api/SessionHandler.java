@@ -110,7 +110,7 @@ public class SessionHandler {
 
     private SessionResult quitSession(BufferedReader in, PrintWriter out, QuitReason reason, String message) {
 
-        Boolean result;
+        boolean result;
 
         if (reason.equals(QuitReason.GOOD_BYE_FROM_CLIENT) || reason.equals(QuitReason.TIMEOUT)) {
 

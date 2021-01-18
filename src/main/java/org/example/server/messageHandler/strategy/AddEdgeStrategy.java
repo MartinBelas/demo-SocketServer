@@ -42,17 +42,12 @@ public class AddEdgeStrategy extends AbstractProcessStrategy implements ProcessS
             result = EdgesHandler.add(edge);
         }
 
-
-        if (!result.isOk()) {
-            resultMessage = AcceptableClientMessage.ADD_EDGE.getFailureResponse();
-        } else {
+        if (result.isOk()) {
             resultMessage = AcceptableClientMessage.ADD_EDGE.getSuccessResponse();
-        }
-
-        if (!result.isOk()) {
-            return new FailureProcessResult(null, resultMessage);
-        } else {
             return new SuccessProcessResult(null, resultMessage);
+        } else {
+            resultMessage = AcceptableClientMessage.ADD_EDGE.getFailureResponse();
+            return new FailureProcessResult(null, resultMessage);
         }
     }
 }
