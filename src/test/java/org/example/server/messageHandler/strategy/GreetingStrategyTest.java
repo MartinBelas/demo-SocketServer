@@ -14,12 +14,10 @@ public class GreetingStrategyTest {
         String name = "Karel Gott";
 
         String messageFromClient = String.format("HI, I AM %s", "Karel Gott");
-        String expected = String.format("HI %s", "Karel Gott");
 
         ProcessMessageResult result = new GreetingStrategy(messageFromClient).process();
-        String resultMessage = String.format(result.getMessage(), name);
 
         assertTrue(result.isOk());
-        assertEquals(expected, resultMessage);
+        assertEquals(name, result.getMessage());
     }
 }
