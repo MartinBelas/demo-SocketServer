@@ -5,8 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.example.server.messageHandler.ProcessMessageResult;
 import org.example.server.messageHandler.SuccessProcessResult;
 
-import java.io.PrintWriter;
-
 public class IDontUnderstandStrategy extends AbstractProcessStrategy implements ProcessStrategy {
 
     private static final Logger logger = LogManager.getLogger(IDontUnderstandStrategy.class);
@@ -18,13 +16,9 @@ public class IDontUnderstandStrategy extends AbstractProcessStrategy implements 
     }
 
     @Override
-    public ProcessMessageResult process(PrintWriter out) {
+    public ProcessMessageResult process() {
 
         logger.warn("Handle IDontUnderstandStrategy");
-
-        out.println(I_DONT_UNDERSTAND_MESSAGE);
-        out.flush();
-
         return new SuccessProcessResult(null, I_DONT_UNDERSTAND_MESSAGE);
     }
 }

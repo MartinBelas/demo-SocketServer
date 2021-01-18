@@ -10,8 +10,6 @@ import org.example.server.messageHandler.FailureProcessResult;
 import org.example.server.messageHandler.ProcessMessageResult;
 import org.example.server.messageHandler.SuccessProcessResult;
 
-import java.io.PrintWriter;
-
 public class RemoveEdgeStrategy extends AbstractProcessStrategy implements ProcessStrategy {
 
     private static final Logger logger = LogManager.getLogger(RemoveEdgeStrategy.class);
@@ -21,7 +19,7 @@ public class RemoveEdgeStrategy extends AbstractProcessStrategy implements Proce
     }
 
     @Override
-    public ProcessMessageResult process(PrintWriter out) {
+    public ProcessMessageResult process() {
 
         logger.info("Handle RemoveEdgeStrategy");
 
@@ -41,10 +39,6 @@ public class RemoveEdgeStrategy extends AbstractProcessStrategy implements Proce
         } else {
             resultMessage = AcceptableClientMessage.REMOVE_EDGE.getSuccessResponse();
         }
-
-        logger.debug(resultMessage);
-        out.println(resultMessage);
-        out.flush();
 
         if (!result.isOk()) {
             return new FailureProcessResult(null, resultMessage);

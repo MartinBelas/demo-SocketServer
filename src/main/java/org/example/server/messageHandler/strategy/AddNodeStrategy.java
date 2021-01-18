@@ -20,13 +20,13 @@ public class AddNodeStrategy extends AbstractProcessStrategy implements ProcessS
     }
 
     @Override
-    public ProcessMessageResult process(PrintWriter out) {
+    public ProcessMessageResult process() {
 
         logger.info("Handle AddNodeStrategy");
 
         String nodeId = (clientMessage.substring(AcceptableClientMessage.ADD_NODE.getMessage().length()).trim());
         Node node = new Node(nodeId);
-        GraphOperationResult result = NodesHandler.addNode(node);
+        GraphOperationResult result = NodesHandler.add(node);
 
         String resultMessage;
         if (!result.isOk()) {
@@ -34,10 +34,6 @@ public class AddNodeStrategy extends AbstractProcessStrategy implements ProcessS
         } else {
             resultMessage = AcceptableClientMessage.ADD_NODE.getSuccessResponse();
         }
-
-        logger.debug(resultMessage);
-        out.println(resultMessage);
-        out.flush();
 
         if (!result.isOk()) {
             return new FailureProcessResult(null, resultMessage);

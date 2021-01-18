@@ -6,8 +6,6 @@ import org.example.server.api.AcceptableClientMessage;
 import org.example.server.messageHandler.ProcessMessageResult;
 import org.example.server.messageHandler.SuccessProcessResult;
 
-import java.io.PrintWriter;
-
 public class GreetingStrategy extends AbstractProcessStrategy implements ProcessStrategy {
 
     private static final Logger logger = LogManager.getLogger(GreetingStrategy.class);
@@ -17,14 +15,11 @@ public class GreetingStrategy extends AbstractProcessStrategy implements Process
     }
 
     @Override
-    public ProcessMessageResult process(PrintWriter out) {
+    public ProcessMessageResult process() {
 
         logger.info("Handle GreetingStrategy");
 
         String clientName = clientMessage.substring(AcceptableClientMessage.GREETING.getMessage().length()).trim();
-        logger.debug("client name: " + clientName);
-        out.println(String.format(AcceptableClientMessage.GREETING.getSuccessResponse(), clientName));
-        out.flush();
 
         return new SuccessProcessResult(null, clientName);
     }

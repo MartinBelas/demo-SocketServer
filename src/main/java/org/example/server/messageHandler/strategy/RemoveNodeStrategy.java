@@ -9,8 +9,6 @@ import org.example.server.messageHandler.FailureProcessResult;
 import org.example.server.messageHandler.ProcessMessageResult;
 import org.example.server.messageHandler.SuccessProcessResult;
 
-import java.io.PrintWriter;
-
 public class RemoveNodeStrategy extends AbstractProcessStrategy implements ProcessStrategy {
 
     private static final Logger logger = LogManager.getLogger(RemoveNodeStrategy.class);
@@ -20,13 +18,13 @@ public class RemoveNodeStrategy extends AbstractProcessStrategy implements Proce
     }
 
     @Override
-    public ProcessMessageResult process(PrintWriter out) {
+    public ProcessMessageResult process() {
 
         logger.info("Handle RemoveNodeStrategy");
 
         String nodeId = (clientMessage.substring(AcceptableClientMessage.REMOVE_NODE.getMessage().length()).trim());
         Node node = new Node(nodeId);
-        GraphOperationResult result = NodesHandler.removeNode(node);
+        GraphOperationResult result = NodesHandler.remove(node);
 
         String resultMessage;
         if (!result.isOk()) {
@@ -34,10 +32,6 @@ public class RemoveNodeStrategy extends AbstractProcessStrategy implements Proce
         } else {
             resultMessage = AcceptableClientMessage.REMOVE_NODE.getSuccessResponse();
         }
-
-        logger.debug(resultMessage);
-        out.println(resultMessage);
-        out.flush();
 
         if (!result.isOk()) {
             return new FailureProcessResult(null, resultMessage);
