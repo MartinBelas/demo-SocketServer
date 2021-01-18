@@ -42,7 +42,7 @@ public class EdgesHandler {
         return false;
     }
 
-    public Collection<Edge> getAll() {
+    public static Collection<Edge> getAll() {
 
         Collection<Edge> deepCopy = new LinkedList<>();
 
@@ -53,6 +53,7 @@ public class EdgesHandler {
         return deepCopy;
     }
 
+    //TODO remove
     public static int getCount() {
         return edges.size();
     }

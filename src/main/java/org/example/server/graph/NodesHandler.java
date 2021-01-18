@@ -9,7 +9,7 @@ public class NodesHandler {
 
     private static Map<String, Node> nodes = new HashMap<>();
 
-    public static GraphOperationResult addNode(Node node) {
+    public static GraphOperationResult add(Node node) {
 
         if (nodes.containsKey(node.getName())) {
             return new GraphOperationResult(false);
@@ -18,7 +18,7 @@ public class NodesHandler {
         return new GraphOperationResult(true);
     }
 
-    public static GraphOperationResult removeNode(Node node) {
+    public static GraphOperationResult remove(Node node) {
 
         if (!nodes.containsKey(node.getName())) {
             return new GraphOperationResult(false);
@@ -31,7 +31,7 @@ public class NodesHandler {
         return nodes.containsKey(nodeName);
     }
 
-    public static Map<String, Node> getAllNodes() {
+    public static Map<String, Node> getAll() {
 
         Map<String, Node> deepCopy = new HashMap<>();
 

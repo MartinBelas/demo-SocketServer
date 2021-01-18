@@ -22,12 +22,12 @@ public class NodesHandlerTest {
         Node node = new Node(nodeName);
         GraphOperationResult result;
 
-        result = nodesHandler.addNode(node);
+        result = nodesHandler.add(node);
         assertEquals(true, result.isOk());
-        assertEquals(1, nodesHandler.getAllNodes().size());
+        assertEquals(1, nodesHandler.getAll().size());
 
-        result = nodesHandler.addNode(node);
+        result = nodesHandler.add(node);
         assertEquals(false, result.isOk());
-        assertEquals(1, nodesHandler.getAllNodes().size());
+        assertEquals(1, nodesHandler.getAll().size());
     }
 }
