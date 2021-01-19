@@ -10,7 +10,6 @@ public class Session {
     private final Socket socket;
 
     private final Instant sessionCreated;
-    private Instant lastMessageReceived;
 
     public Session(Socket socket) {
         this.id = UUID.randomUUID();

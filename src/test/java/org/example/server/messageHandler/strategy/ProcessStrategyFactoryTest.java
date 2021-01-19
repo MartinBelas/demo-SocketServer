@@ -1,6 +1,5 @@
 package org.example.server.messageHandler.strategy;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

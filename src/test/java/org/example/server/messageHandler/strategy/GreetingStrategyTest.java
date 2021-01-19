@@ -1,6 +1,5 @@
 package org.example.server.messageHandler.strategy;
 
-import org.example.server.api.AcceptableClientMessage;
 import org.example.server.messageHandler.ProcessMessageResult;
 import org.junit.Test;
 

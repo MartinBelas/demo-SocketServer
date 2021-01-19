@@ -5,7 +5,6 @@ import java.util.UUID;
 public class SessionResult {
 
     private final boolean isOk;
-    private final UUID sessionId;
     private final QuitReason reason;
     private final String message;
 
@@ -15,7 +14,6 @@ public class SessionResult {
 
     public SessionResult(boolean isOk, UUID id, QuitReason reason, String message) {
         this.isOk = isOk;
-        this.sessionId = id;
         this.reason = reason;
         this.message = message;
     }
