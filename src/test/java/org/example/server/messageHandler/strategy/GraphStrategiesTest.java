@@ -11,9 +11,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GraphStrategiesTest {
-
+    
     @BeforeClass
     public static void beforeClass() {
+        NodesHandler.clear();
         generateNodes();
         generateEdges();
     }

@@ -7,11 +7,9 @@ import static org.junit.Assert.assertEquals;
 
 public class NodesHandlerTest {
 
-    NodesHandler nodesHandler;
-
     @Before
     public void setUp() {
-        nodesHandler = new NodesHandler();
+        NodesHandler.clear();
     }
 
     @Test
@@ -21,12 +19,12 @@ public class NodesHandlerTest {
         Node node = new Node(nodeName);
         GraphOperationResult result;
 
-        result = nodesHandler.add(node);
+        result = NodesHandler.add(node);
         assertEquals(true, result.isOk());
-        assertEquals(1, nodesHandler.getAll().size());
+        assertEquals(1, NodesHandler.getAll().size());
 
-        result = nodesHandler.add(node);
+        result = NodesHandler.add(node);
         assertEquals(false, result.isOk());
-        assertEquals(1, nodesHandler.getAll().size());
+        assertEquals(1, NodesHandler.getAll().size());
     }
 }

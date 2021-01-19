@@ -39,4 +39,8 @@ public class NodesHandler {
 
         return deepCopy;
     }
+
+    public static void clear() {
+        nodes.clear();
+    }
 }
