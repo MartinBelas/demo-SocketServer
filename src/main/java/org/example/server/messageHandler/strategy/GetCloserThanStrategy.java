@@ -39,7 +39,7 @@ public class GetCloserThanStrategy extends AbstractProcessStrategy implements Pr
         String result = resultNodes.stream()
                 .map(n -> n.getName())
                 .sorted()
-                .skip(0)
+                .skip(1)
                 .collect(Collectors.joining( "," ));
 
         return new SuccessProcessResult(null, result);

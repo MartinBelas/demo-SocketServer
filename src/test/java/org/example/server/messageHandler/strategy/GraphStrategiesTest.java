@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class FindShortestPathStrategyTest {
+public class GraphStrategiesTest {
 
     @BeforeClass
     public static void beforeClass() {
