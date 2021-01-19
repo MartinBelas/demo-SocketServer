@@ -43,7 +43,8 @@ public class GraphService {
         List<Node> neighbors = getUnprocessedNeighbors(node);
 
         for (Node neighbor : neighbors) {
-            if (getDistanceFromStart(neighbor) > getDistanceFromStart(node) + getDistanceBetween(node, neighbor)) {
+            if (getDistanceFromStart(neighbor) > getDistanceFromStart(node) + getDistanceBetween(node, neighbor)
+                    && getDistanceFromStart(node) + getDistanceBetween(node, neighbor) > 0) {
                 distances.put(neighbor, getDistanceFromStart(node) + getDistanceBetween(node, neighbor));
                 predecessors.put(neighbor, node);
                 unprocessed.put(neighbor.getName(), neighbor);
