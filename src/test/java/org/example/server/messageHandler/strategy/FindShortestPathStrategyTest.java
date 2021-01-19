@@ -50,8 +50,6 @@ public class FindShortestPathStrategyTest {
 
         ProcessMessageResult result = strategy.process();
 
-        System.out.println(" ---> RESULT : " + result.getMessage());
-
         assertNotNull(result);
         assertTrue(Integer.valueOf(Integer.valueOf(result.getMessage())) > 0);
         assertFalse(Integer.valueOf(result.getMessage()).equals(Integer.MAX_VALUE));
@@ -67,9 +65,22 @@ public class FindShortestPathStrategyTest {
 
         ProcessMessageResult result = strategy.process();
 
-        System.out.println(" ---> RESULT : " + result.getMessage());
-
         assertNotNull(result);
         assertTrue(Integer.valueOf(result.getMessage()).equals(Integer.MAX_VALUE));
+    }
+
+    @Test
+    public void testGetCloserThan() {
+
+        String message = "CLOSER THAN 330 Node_0";
+        String expected = "Node_1,Node_2,Node_4,Node_7";
+
+        GetCloserThanStrategy strategy =
+                new GetCloserThanStrategy(message);
+
+        String result = strategy.process().getMessage();
+
+        assertNotNull(result);
+        assertEquals(expected, result);
     }
 }

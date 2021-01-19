@@ -17,6 +17,7 @@ public class ProcessStrategyFactory {
         ADD_EDGE,
         REMOVE_EDGE,
         FIND_SHORTEST_PATH,
+        GET_CLOSER_THAN,
         NONE;
     }
 
@@ -52,6 +53,9 @@ public class ProcessStrategyFactory {
 
             case FIND_SHORTEST_PATH:
                 return new FindShortestPathStrategy(clientMessage);
+
+            case GET_CLOSER_THAN:
+                return new GetCloserThanStrategy(clientMessage);
 
             default:
                 return new NoneStrategy(clientMessage);
@@ -107,6 +111,12 @@ public class ProcessStrategyFactory {
         if (clientMessage.substring(0, AcceptableClientMessage.FIND_SHORTEST_PATH.getMessage().length())
                 .equals(AcceptableClientMessage.FIND_SHORTEST_PATH.getMessage())) {
             return ProcessStrategyType.FIND_SHORTEST_PATH;
+        }
+
+        //GET_CLOSER_THAN
+        if (clientMessage.substring(0, AcceptableClientMessage.GET_CLOSER_THAN.getMessage().length())
+                .equals(AcceptableClientMessage.GET_CLOSER_THAN.getMessage())) {
+            return ProcessStrategyType.GET_CLOSER_THAN;
         }
 
         return ProcessStrategyType.NONE;

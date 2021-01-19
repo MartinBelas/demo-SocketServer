@@ -9,7 +9,8 @@ public enum AcceptableClientMessage {
     REMOVE_NODE("REMOVE NODE", "NODE REMOVED", "ERROR: NODE NOT FOUND"),
     ADD_EDGE("ADD EDGE", "EDGE ADDED", "ERROR: NODE NOT FOUND"),
     REMOVE_EDGE("REMOVE EDGE", "EDGE REMOVED", "ERROR: NODE NOT FOUND"),
-    FIND_SHORTEST_PATH("SHORTEST PATH", "%d", "ERROR: NODE NOT FOUND");
+    FIND_SHORTEST_PATH("SHORTEST PATH", "%d", "ERROR: NODE NOT FOUND"),
+    GET_CLOSER_THAN("CLOSER THAN", "%s", "ERROR: NODE NOT FOUND");
 
     private final String message;
     private final String successResponse;
