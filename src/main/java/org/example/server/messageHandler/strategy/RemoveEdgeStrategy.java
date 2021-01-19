@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.example.server.api.AcceptableClientMessage;
 import org.example.server.graph.Edge;
 import org.example.server.graph.EdgesHandler;
+import org.example.server.graph.GraphOperationResult;
 import org.example.server.graph.Node;
 import org.example.server.messageHandler.FailureProcessResult;
 import org.example.server.messageHandler.ProcessMessageResult;

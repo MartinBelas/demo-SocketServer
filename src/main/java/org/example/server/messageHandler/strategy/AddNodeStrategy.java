@@ -3,6 +3,7 @@ package org.example.server.messageHandler.strategy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.server.api.AcceptableClientMessage;
+import org.example.server.graph.GraphOperationResult;
 import org.example.server.graph.Node;
 import org.example.server.graph.NodesHandler;
 import org.example.server.messageHandler.FailureProcessResult;

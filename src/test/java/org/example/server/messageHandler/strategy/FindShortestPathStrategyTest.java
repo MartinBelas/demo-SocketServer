@@ -8,14 +8,12 @@ import org.example.server.messageHandler.ProcessMessageResult;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.*;
-
 import static org.junit.Assert.*;
 
 public class FindShortestPathStrategyTest {
 
     @BeforeClass
-    public static void beforeClass() throws Exception {
+    public static void beforeClass() {
         generateNodes();
         generateEdges();
     }
@@ -48,7 +46,7 @@ public class FindShortestPathStrategyTest {
         String message = "SHORTEST PATH Node_0 Node_6";
 
         FindShortestPathStrategy strategy =
-                new FindShortestPathStrategy(NodesHandler.getAll(), EdgesHandler.getAll(), message);
+                new FindShortestPathStrategy(message);
 
         ProcessMessageResult result = strategy.process();
 
@@ -65,7 +63,7 @@ public class FindShortestPathStrategyTest {
         String message = "SHORTEST PATH Node_6 Node_0";
 
         FindShortestPathStrategy strategy =
-                new FindShortestPathStrategy(NodesHandler.getAll(), EdgesHandler.getAll(), message);
+                new FindShortestPathStrategy(message);
 
         ProcessMessageResult result = strategy.process();
 

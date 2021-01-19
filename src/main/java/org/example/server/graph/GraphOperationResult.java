@@ -1,4 +1,4 @@
-package org.example.server.messageHandler.strategy;
+package org.example.server.graph;
 
 public class GraphOperationResult {
 
